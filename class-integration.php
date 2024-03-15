@@ -51,17 +51,17 @@ class Integration {
 
 
 		$options_field_id = Utils::get_field_id( $form, 'Options', 'label' );
-		error_log($options_field_id);
+
 		if ( 'yes' == $entry[$options_field_id . '.1'] ) {
-			$options_value = 'true';
+			$options_value = true;
 		} else {
-			$options_value = 'false';
+			$options_value = false;
 		}
 
 		if ( 'yes-sms' == $entry[$options_field_id . '.2'] ) {
-			$options_value_sms = 'true';
+			$options_value_sms = true;
 		} else {
-			$options_value_sms = 'false';
+			$options_value_sms = false;
 		}
 
 		// Parse out birthday values
@@ -72,12 +72,6 @@ class Integration {
 		$location_id = Utils::get_location_id( $location );
 		$sport_id    = Utils::get_sport_id( $sport );
 
-		error_log("SPORT");
-		error_log($sport);
-		error_log($sport_id);
-
-		// We are not currently collecting zipcode from the form. Right now it will always default to 00000
-		// However, if it is added in the future, the value will replace that and flow through to Fishbowl.
 		$zipCode = Utils::get_field_value( $form, $entry, 'Zipcode', 'label' ) ?: '00000';
 
 
@@ -93,8 +87,8 @@ class Integration {
 			"birthdayDay"   => $birthdayDay,
 			"birthdayYear"  => $birthdayYear,
 			"favoriteSport" => $sport_id,
-			"receiveEmails" => $options_value,
-			"receiveSms"    => $options_value_sms,
+			"receiveEmails" => (bool) $options_value,
+			"receiveSms"    => (bool) $options_value_sms,
 			"source"        => $source,
 			"brandUUID"     => $brand_uuid,
 			"brandSchemaId" => $brand_schema,
@@ -103,11 +97,6 @@ class Integration {
 		);
 
 		$dataJson = json_encode($data);
-
-		// error_log( print_r( $entry, true ) );
-		// error_log( '--------------------');
-		// error_log( json_encode( $data ) );
-		// error_log( '--------------------');
 
 		gform_update_meta( $entry['id'], 'fishbowl_request_data_json', $dataJson );
 		gform_update_meta( $entry['id'], 'fishbowl_request_data', $data );
