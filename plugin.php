@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GravityForms Fishbowl Integration
  * Description: Enables GravityForms entries to submit to Fishbowl's CRM Platform
- * Version: 1.0.0
+ * Version: 1.1
  * Author: Dan Scott
  * Author URI: https://danscott.dev
  * Author Email: danscott2150@gmail.com
@@ -27,9 +27,11 @@ add_action( 'plugins_loaded', function() {
 	require_once GF_FISHBOWL_PATH . '/class-settings.php';
 	require_once GF_FISHBOWL_PATH . '/class-meta-boxes.php';
 	require_once GF_FISHBOWL_PATH . '/class-utils.php';
+	require_once GF_FISHBOWL_PATH . '/class-validation.php';
 	new Integration();
 	new Settings();
 	new Meta_Boxes();
+	new Validation();
 } );
 
 // On plugin activation: Adds custom 'CRM Status' field to all forms.

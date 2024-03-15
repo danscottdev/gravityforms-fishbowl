@@ -19,7 +19,7 @@ namespace GF_Fishbowl;
 class Integration {
 
 	public function __construct() {
-		add_action( 'gform_after_submission', array( $this, 'submit_to_fishbowl' ), 10, 2 );
+		// add_action( 'gform_after_submission', array( $this, 'submit_to_fishbowl' ), 10, 2 );
 	}
 
 	public function submit_to_fishbowl( $entry, $form ) {
