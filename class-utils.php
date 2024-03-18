@@ -81,6 +81,7 @@ class Utils {
 			'Navy Yard'         => 39,
 			'Houston'           => 40,
 			'Sacramento'        => 41,
+			'Orlando'           => 870,
 		);
 
 		return $locations[ $location ] ?? 0;
