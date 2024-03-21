@@ -11,22 +11,22 @@ namespace GF_Fishbowl;
 class Validation {
 
 	public function __construct() {
-		add_filter( 'gform_field_validation_27', [$this, 'is_user_old_enough'], 10, 5 );
+		add_filter( 'gform_field_validation', [$this, 'is_user_old_enough'], 10, 5 );
 	}
 
-
 	public function is_user_old_enough( $result, $value, $form, $field, $entry ) {
-
-		$min_age = 21;
 
 		if ( 'Birthday' !== $field->label ) {
 			return $result;
 		}
 
+		$min_age = 21;
+
 		if ( $result['is_valid'] ) {
 
 			if ( is_array( $value ) ) {
 				$value = array_values( $value );
+				error_log( print_r( $value, true ) );
 			}
 
 			$date_value = \GFFormsModel::prepare_date( $field->dateFormat, $value );
@@ -35,7 +35,10 @@ class Validation {
 			$diff  = $today->diff( new \DateTime( $date_value ) );
 			$age   = $diff->y;
 
+			error_log( 'User is ' . $age . ' years old.' );
+
 			if ( $age < $min_age ) {
+				error_log( 'User is under ' . $min_age . ' years old.' );
 				$result['is_valid'] = false;
 				$result['message']  = 'Sorry, you must be at least ' . $min_age . ' years old.';
 			}

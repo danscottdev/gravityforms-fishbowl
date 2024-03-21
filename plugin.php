@@ -34,6 +34,8 @@ add_action( 'plugins_loaded', function() {
 	new Validation();
 } );
 
+wp_enqueue_script('custom-gravity-forms-js', '' . GF_FISHBOWL_URL . '/custom-validation.js', array('jquery'), null, true);
+
 // On plugin activation: Adds custom 'CRM Status' field to all forms.
 // This field is not mission-critical, but adds a helpful layer of visibility to any entries that may not have posted.
 require_once GF_FISHBOWL_PATH . '/class-activation.php';
