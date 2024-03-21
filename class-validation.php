@@ -26,7 +26,7 @@ class Validation {
 
 			if ( is_array( $value ) ) {
 				$value = array_values( $value );
-				error_log( print_r( $value, true ) );
+				// error_log( print_r( $value, true ) );
 			}
 
 			$date_value = \GFFormsModel::prepare_date( $field->dateFormat, $value );
@@ -35,10 +35,10 @@ class Validation {
 			$diff  = $today->diff( new \DateTime( $date_value ) );
 			$age   = $diff->y;
 
-			error_log( 'User is ' . $age . ' years old.' );
+			// error_log( 'User is ' . $age . ' years old.' );
 
 			if ( $age < $min_age ) {
-				error_log( 'User is under ' . $min_age . ' years old.' );
+				// error_log( 'User is under ' . $min_age . ' years old.' );
 				$result['is_valid'] = false;
 				$result['message']  = 'Sorry, you must be at least ' . $min_age . ' years old.';
 			}
