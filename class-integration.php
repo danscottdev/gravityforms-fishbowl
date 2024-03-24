@@ -19,12 +19,14 @@ namespace GF_Fishbowl;
 class Integration {
 
 	public function __construct() {
-		// add_action( 'gform_after_submission', array( $this, 'submit_to_fishbowl' ), 10, 2 );
+		add_action( 'gform_after_submission', array( $this, 'submit_to_fishbowl' ), 10, 2 );
 	}
 
-	public function submit_to_fishbowl( $entry, $form ) {
+	public static function submit_to_fishbowl( $entry, $form ) {
 
-		error_log( print_r( $entry, true ) );
+		error_log("Submitting API..." . $entry['id']);
+
+		// error_log( print_r( $entry, true ) );
 
 		Utils::init_fishbowl_status($entry, $form);
 
@@ -125,7 +127,11 @@ class Integration {
 		gform_update_meta( $entry['id'], 'fishbowl_response_code', $response_code );
 		gform_update_meta( $entry['id'], 'fishbowl_response_message', $response_body );
 
-		Utils::update_fishbowl_status($response_code, $entry, $form);
+		if ( 'Error: http_request_failed' === $response_code ) {
+			Utils::update_fishbowl_status("Timeout Error", $entry, $form);
+		} else {
+			Utils::update_fishbowl_status($response_code, $entry, $form);
+		}
 
 	}
 

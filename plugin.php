@@ -28,10 +28,12 @@ add_action( 'plugins_loaded', function() {
 	require_once GF_FISHBOWL_PATH . '/class-meta-boxes.php';
 	require_once GF_FISHBOWL_PATH . '/class-utils.php';
 	require_once GF_FISHBOWL_PATH . '/class-validation.php';
+	require_once GF_FISHBOWL_PATH . '/class-retry.php';
 	new Integration();
 	new Settings();
 	new Meta_Boxes();
 	new Validation();
+	new Retry();
 } );
 
 wp_enqueue_script('custom-gravity-forms-js', '' . GF_FISHBOWL_URL . '/custom-validation.js', array('jquery'), null, true);
@@ -41,3 +43,8 @@ wp_enqueue_script('custom-gravity-forms-js', '' . GF_FISHBOWL_URL . '/custom-val
 require_once GF_FISHBOWL_PATH . '/class-activation.php';
 new Activation();
 register_activation_hook( __FILE__, array( 'GF_Fishbowl\Activation', 'activate' ) );
+
+register_deactivation_hook(__FILE__, function(){
+	$timestamp = wp_next_scheduled('twb_fishbowl_retry_api');
+	wp_unschedule_event($timestamp, 'twb_fishbowl_retry_api');
+});
