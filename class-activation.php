@@ -14,7 +14,7 @@ namespace GF_Fishbowl;
 class Activation {
 
 	public static function activate() {
-		$this->add_crm_status_fields();
+		// $this->add_crm_status_fields();
 		$this->set_cron_jobs();
 	}
 

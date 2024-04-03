@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GravityForms Fishbowl Integration
  * Description: Enables GravityForms entries to submit to Fishbowl's CRM Platform
- * Version: 1.1
+ * Version: 1.2
  * Author: Dan Scott
  * Author URI: https://danscott.dev
  * Author Email: danscott2150@gmail.com

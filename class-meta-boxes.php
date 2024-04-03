@@ -51,10 +51,9 @@ class Meta_Boxes {
 		}
 
 		if ( ! empty( $request_data ) ) {
-			// $request_data = (array) json_decode( $request_data );
 			printf(
 				'<li><strong>PHP Processing Data:</strong> <br><pre>%s</pre></li>',
-				esc_html( print_r( $request_data, TRUE ) ) // phpcs:ignore
+				esc_html( print_r( $request_data, TRUE ) )
 			);
 		}
 

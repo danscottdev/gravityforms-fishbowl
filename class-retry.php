@@ -21,10 +21,6 @@ class Retry {
 		// Fetch failed submissions
 		$failures = $this->fetch_failed_submissions();
 
-		error_log("failures:");
-		error_log( print_r( $failures, true ) );
-
-
 		// Re-run API request for all failed entries
 		foreach ($failures as $entry_id) {
 
@@ -58,9 +54,6 @@ class Retry {
 			}
 		}
 
-		// error_log("fishbowl forms:");
-		// error_log( print_r( $fishbowl_forms, true ) );
-
 		if (!$fishbowl_forms) {
 			return;
 		}
@@ -74,18 +67,15 @@ class Retry {
 					'mode' => 'any',
 					array(
 						'key'   => $form['fieldId'],
-						'value' => 'Error: http_request_failed '
+						'value' => 'Error: http_request_failed'
 					),
 				)
 			);
 
-			$paging = array( 'offset' => 0, 'page_size' => 5 );
+			$paging = array( 'offset' => 0, 'page_size' => 10 );
 			$entries = \GFAPI::get_entry_ids($form['formId'], $search_criteria, null, $paging);
 			array_push($failures, ...$entries);
 		}
-
-		// error_log("failures:");
-		// error_log( print_r( $failures, true ) );
 
 		return $failures;
 	}
@@ -100,7 +90,7 @@ class Retry {
 		register_rest_route( 'toms_fishbowl/v1', '/test', array(
 			'methods' => 'GET',
 			'callback' => function() {
-				error_log("manual test via endpoint:");
+				// error_log("manual test via endpoint:");
 				$this->retry_failed_submissions();
 				return true;
 			}

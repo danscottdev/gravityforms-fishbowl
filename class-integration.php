@@ -24,10 +24,6 @@ class Integration {
 
 	public static function submit_to_fishbowl( $entry, $form ) {
 
-		error_log("Submitting API..." . $entry['id']);
-
-		// error_log( print_r( $entry, true ) );
-
 		Utils::init_fishbowl_status($entry, $form);
 
 		// If Fishbowl integration is not enabled, exit
@@ -122,13 +118,12 @@ class Integration {
 		    $response_body = wp_remote_retrieve_body( $response );
 		}
 
-		error_log( $response_code );
-		error_log( $response_body );
 		gform_update_meta( $entry['id'], 'fishbowl_response_code', $response_code );
 		gform_update_meta( $entry['id'], 'fishbowl_response_message', $response_body );
 
 		if ( 'Error: http_request_failed' === $response_code ) {
-			Utils::update_fishbowl_status("Timeout Error", $entry, $form);
+			// Utils::update_fishbowl_status("Timeout Error", $entry, $form);
+			error_log("timeout");
 		} else {
 			Utils::update_fishbowl_status($response_code, $entry, $form);
 		}
