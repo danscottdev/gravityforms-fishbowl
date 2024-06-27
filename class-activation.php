@@ -15,7 +15,7 @@ class Activation {
 
 	public static function activate() {
 		// $this->add_crm_status_fields();
-		$this->set_cron_jobs();
+		// $this->set_cron_jobs();
 	}
 
 	public function add_crm_status_fields(){
@@ -47,9 +47,9 @@ class Activation {
 		}
 	}
 
-	public function set_cron_jobs(){
+	public static function set_cron_jobs(){
 		// Add hourly cron job to re-send failed API submissions to Fishbowl
-		if (!wp_next_scheduled('twb_fishbowl_retry_api')) {
+		if ( ! wp_next_scheduled('twb_fishbowl_retry_api')) {
 			wp_schedule_event(time(), 'hourly', 'twb_fishbowl_retry_api');
 		}
 	}

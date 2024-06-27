@@ -13,7 +13,7 @@ class Retry {
 
 	public function __construct() {
 		add_action( 'init', [ $this, 'registerTestEndpoint' ] );
-		add_action('twb_fishbowl_retry_api', 'retry_failed_submissions');
+		add_action('twb_fishbowl_retry_api', [ $this, 'retry_failed_submissions' ] );
 	}
 
 	public function retry_failed_submissions() {

@@ -72,6 +72,13 @@ class Integration {
 
 		$zipCode = Utils::get_field_value( $form, $entry, 'Zipcode', 'label' ) ?: '00000';
 
+		// Check Source
+		$pageURL = Utils::get_field_value( $form, $entry, 'Page URL', 'label' );
+
+		// Set $source to "Scan to Win" if $pageURL contains the substring 'scan-to-win'
+		if ( strpos( $pageURL, 'scan-to-win' ) !== false ) {
+			$source = 'Scan to Win';
+		}
 
 		// Parse entry values into array
 		$data = array(

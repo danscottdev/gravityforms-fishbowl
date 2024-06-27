@@ -40,9 +40,14 @@ wp_enqueue_script('custom-gravity-forms-js', '' . GF_FISHBOWL_URL . '/custom-val
 
 // On plugin activation: Adds custom 'CRM Status' field to all forms.
 // This field is not mission-critical, but adds a helpful layer of visibility to any entries that may not have posted.
-require_once GF_FISHBOWL_PATH . '/class-activation.php';
-new Activation();
-register_activation_hook( __FILE__, array( 'GF_Fishbowl\Activation', 'activate' ) );
+register_activation_hook( __FILE__, function(){
+	// require_once GF_FISHBOWL_PATH . '/class-activation.php';
+	// Activation::activate();
+
+	if ( ! wp_next_scheduled('twb_fishbowl_retry_api')) {
+		wp_schedule_event(time(), 'hourly', 'twb_fishbowl_retry_api');
+	}
+} );
 
 register_deactivation_hook(__FILE__, function(){
 	$timestamp = wp_next_scheduled('twb_fishbowl_retry_api');
